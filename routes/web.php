@@ -11,6 +11,26 @@
 |
 */
 
+use Illuminate\Support\Facades\Cache;
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/cache', function () {
+    $ca = Cache::remember('key', 15, function () {
+        
+        for($i = 0; $i < 10000000; $i++ ){
+            $soma = 4 + 4;
+            $mult = 4 * 4;
+            $mult = $soma * $mult / ($i + 1);
+
+            if($i == 9999999){
+                return $i;
+            }
+
+        }
+    });
+
+    return $ca;
 });
